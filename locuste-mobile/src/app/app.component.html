@@ -1,0 +1,50 @@
+
+<mat-drawer-container class="main-container" fullscreen>
+  <mat-drawer #drawer mode="over" >
+    <mat-action-list>
+      <button mat-list-item class="main-icon">
+        <span>Locuste Application Mobile</span>
+      </button>
+  
+  
+      <button mat-list-item>
+        <mat-icon matListIcon >home</mat-icon>
+        <span>Accueil</span>
+      </button>
+        
+
+      <button mat-list-item>
+        <mat-icon matListIcon >apps</mat-icon>
+        <span>Mosaïque</span>
+      </button>
+
+      <button mat-list-item>
+        <mat-icon matListIcon >location_on</mat-icon>
+        <span>Carte</span>
+      </button>
+        
+        
+      <button mat-list-item>
+        <mat-icon matListIcon >help</mat-icon>
+        <span>Aide</span>
+      </button>
+
+      <button mat-list-item (click)="authenticate()"> 
+        <mat-icon matListIcon >input</mat-icon>
+        <span> Login </span>
+      </button>
+
+
+    </mat-action-list>
+
+  </mat-drawer>
+  <mat-drawer-content>
+   
+    <router-outlet></router-outlet>
+
+    <button mat-button (click)="drawer.toggle()" class="footer">
+      <h1> <mat-icon>menu</mat-icon> </h1>
+    </button>
+  </mat-drawer-content>
+</mat-drawer-container>
+

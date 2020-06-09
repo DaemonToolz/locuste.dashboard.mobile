@@ -1,0 +1,13 @@
+{
+    "data": [
+        {"icon": "device_hub", "content":"Unité de contrôle", "class": "error-fill", "description":"Unité de contrôle (programme principal) hors ligne ou inacessible"},
+        {"icon": "device_hub", "content":"Unité de contrôle", "class": "success-fill", "description":"Unité de contrôle (programme principal) opérationnel ou accessible"},
+        {"icon": "location_on", "content":"Carte du secteur;", "class": "error-fill", "description":"Gestionnaire de carte non prêt"},
+        {"icon": "location_on", "content":"Carte du secteur", "class": "success-fill", "description":"Gestionnaire de carte prêt"},
+        
+        {"class": "success-fill", "content":"&#8288;","description":"Affichage d'un succès"},
+        {"class": "warning-fill", "content":"&#8288;", "description":"Affichage d'un avertissement"},
+        {"class": "error-fill", "content":"&#8288;", "description":"Affichage d'une erreur"},
+        {"class": "info-fill", "content":"&#8288;", "description":"Affichage d'une information"}
+    ]
+}

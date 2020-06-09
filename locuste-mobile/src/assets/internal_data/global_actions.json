@@ -1,0 +1,16 @@
+{
+    "data": [
+        {"is_custom":true, "icon": "drone_icon", "content":"Vue générale", "description":"Accéder à la vue mosaïque"},
+        {"icon": "device_hub", "content":"Unité de contrôle", "description":"Accéder à la section maintenance"},
+        {"class":"info-fill","content":"Connexion en cours", "description":"Accéder à la section maintenance"},
+        {"class":"error-fill","content":"Echec de la connexion", "description":"Accéder à la section maintenance"},
+        {"class":"success-fill","content":"Connexion établie", "description":"Accéder à la section maintenance"},
+        
+        {"icon": "location_on", "content":"Carte du secteur", "description":"Accéder à la carte du secteur"},
+        {"icon": "help", "content":"Menu d'aide", "description":"Accéder au menu d'aide"},
+        {"icon": "person", "content":"Utilisateur (ou autre)", "description":"Ouvre le menu d'authentification"}
+        
+
+        
+    ]
+}

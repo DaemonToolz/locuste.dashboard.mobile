@@ -1,0 +1,10 @@
+{
+    "data": [
+        {"icon": "check_circle", "content":"Module actif", "description":"Système / Sous-système opérationnel"},
+        {"icon": "check_circle", "content":"Module actif", "class": "warning-text","description":"Système / Sous-système pouvant intérférer"},
+        {"icon": "check_circle", "content":"Module actif", "class": "error-text","description":"Système / Sous-système d'erreur actif (état d'erreur, activation du failover)", "comment":"Une fois la procédure de fail-over terminée, le sous-système associé sera arrêté et l'état repassera en OK"},
+       
+        {"icon": "remove_circle", "content":"Module inactif", "class": "error-text", "description":"Système / Sous-système hors-ligne", "comment":"Tous les boutons présents dans la section centrale de la page de maintenance peuvent être cliqués pour demander un redémarrage"},
+        {"icon": "remove_circle", "content":"Module inactif", "description":"Système / Sous-système inactif (état OK)"}
+    ]
+}

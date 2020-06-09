@@ -1,0 +1,29 @@
+{
+    "data": [
+
+        {"icon": "gps_fixed",  "description":"Système GPS prêt pour un drone"},
+        {"icon": "gps_not_fixed", "description":"Système GPS en cours d'acquisition pour un drone"},
+        {"icon": "gps_off",  "description":"Système GPS inaccessible pour un drone"},
+        {"icon": "gps_fixed",  "class":"success-fill", "description":"Signal GPS fort pour un drone"},
+        {"icon": "gps_fixed", "class":"warning-fill", "description":"Signal GPS moyen pour un drone"},
+        {"icon": "gps_fixed", "class":"error-fill", "description":"Signal GPS faible pour un drone"},
+
+        {"icon": "signal_wifi_4_bar", "description":"Signal WIFI OK pour un drone"},
+        {"icon": "signal_wifi_off",  "description":"Signal WIFI perdu pour un drone"},
+        {"icon": "signal_wifi_4_bar", "class":"success-fill", "description":"Signal WIFI fort pour un drone"},
+        {"icon": "signal_wifi_4_bar", "class":"warning-fill", "description":"Signal WIFI moyen pour un drone"},
+        {"icon": "signal_wifi_4_bar", "class":"error-fill", "description":"Signal WIFI faible pour un drone"},
+
+
+        {"icon": "battery_charging_full", "class":"success-fill","description":"Batterie chargée"},
+        {"icon": "battery_charging_full",  "class":"warning-fill", "description":"Batterie moyenne chargée"},
+        {"icon": "battery_charging_full",  "class":"error-fill", "description":"Batterie faiblement chargée"},
+
+        {"icon": "airplanemode_active", "class":"success-fill", "description":"Système automatique actif pour un drone"},
+        {"icon": "airplanemode_active",  "class":"warning-fill", "description":"Système automatique inactif pour un drone"},
+        {"icon": "airplanemode_inactive",  "class":"error-fill", "description":"Système automatique indisponible pour un drone"}
+
+
+    ]
+}
+

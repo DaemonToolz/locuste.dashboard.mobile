@@ -1,0 +1,10 @@
+{
+    "data": [
+        {"icon": "android", "content":"Passer en mode manuel", "class": "success-fill", "description":"Passer en mode manuel"},
+        {"icon": "person", "content":"Passer en mode automatique", "class": "warning-fill", "description":"Passer en mode automatique"},
+        {"icon": "lock_open", "content":"Passer en mode test", "class":"success-fill", "description":"Enclenche le mode simulation / maintenance"},
+        {"icon": "lock", "content":"Passer en mode normal", "class":"warning-fill", "description":"Enclenche le mode normal"},
+        {"icon": "help", "content":"Tutoriel", "description":"Accéder au tutoriel de vol (simple / avancé)"},
+        { "icon": "settings_application", "content":"Paramètres", "description":"Accéder aux configurations de vol (standard / avancé)"}
+    ]
+}

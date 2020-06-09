@@ -1,0 +1,11 @@
+{
+    "data": [
+        {"icon": "open_in_browser", "content":"Nom du drone", "description":"Accéder à la console de pilotage pour un drone"},
+        {"is_custom": true, "icon": "drone_icon", "content":"Caméra", "description":"Afficher la caméra frontale d'un drone"},
+        {"icon": "location_on", "content":"Carte", "description":"Afficher la position et les déplacements du drone, et permet de marquer une position sur la carte"},
+        {"icon": "loupe", "content":"Détails", "description":"Afficher les détails pour un drone (position GPS, état du signal, ...)"},
+        {"icon": "airplanemode_active", "content":"Manuel / Automatique", "description":"Changer l'état d'activité du système automatique pour un drone"},
+        {"icon": "flight_takeoff", "content":"Décoller", "description":"Ordonner le décollage par le biais du pilote automatique"},
+        {"icon": "flight_land", "content":"Atterrir", "description":"Ordonner l'atterrissage par le biais du pilote automatique"}
+    ]
+}
