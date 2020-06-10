@@ -1,8 +1,7 @@
 # locuste.dashboard.mobile
 LOCUSTE : Interface graphique MOBILE ANGULAR 
 
-<img width="2575" alt="locuste-mobile-banner" src="https://user-images.githubusercontent.com/6602774/84284164-1f50d500-ab3c-11ea-8fda-eedfb1a14091.png">
-
+<img width="2575" alt="locuste-mobile-banner" src="https://user-images.githubusercontent.com/6602774/84285948-5aec9e80-ab3e-11ea-9a2c-3b4c23b80ad4.png">
 
 Le project Locuste se divise en 4 grandes sections : 
 * Automate (Drone Automata) PYTHON (https://github.com/DaemonToolz/locuste.drone.automata)
