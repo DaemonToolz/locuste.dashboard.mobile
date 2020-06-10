@@ -21,5 +21,3 @@ Détail des choix techniques pour la partie Interface Graphique :
 
 * [Angular] - Exposer et envoyer rapidement une application web qui intègre toutes les composantes de sécurité
 * [SocketIO] - Elément facile intégré avec Angular, Node et Python (temps-réel)
-
-Temps entre l'acquisition de la touche et l'interprétation : quasi-instantanée (< 50ms, mesures plus précises requises)
