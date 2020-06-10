@@ -12,3 +12,47 @@ html, body {
 .cdk-global-scrollblock{
     overflow-y: auto !important;
 }
+
+.control{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.error {
+  background-color: red;
+}
+  
+.success {
+  background-color: green;
+}
+  
+.warning{
+ background-color: orange;
+}
+  
+.info {
+  background-color: blue;
+}
+
+.control{
+  width: 100%;
+}
+
+.high {
+  background-color: green ;
+}
+
+.medium{
+  background-color: orange ;
+}
+
+
+.low{
+  background-color: red ;
+}
+
+.critical{
+  background-color: darkred ;
+}

@@ -1,1 +1,35 @@
-<p>drone-console works!</p>
+
+<div class="left-joystick" #left></div>
+<div class="right-joystick" #right></div>
+
+<div class="control">
+    <button mat-button class="success">
+        <mat-icon> android </mat-icon>
+    </button>
+
+    <button mat-button class="warning">
+        <mat-icon> gps_fixed </mat-icon>
+    </button>
+
+    <button mat-button class="warning">
+        <mat-icon> signal_wifi_4_bar </mat-icon>
+    </button>
+    <button mat-button class="error">
+        <mat-icon> battery_charging_full </mat-icon>
+    </button>
+    <button mat-button class="success">
+        <mat-icon> lock_open </mat-icon>
+    </button>
+</div>
+<div>
+    <app-rtspstreamer  [width]="width" [height]="height"  [drone]="'ANAFI_192.168.42.1'"></app-rtspstreamer>
+</div>
+<div class="control">
+    <button mat-button>
+        <mat-icon>help</mat-icon>
+    </button>
+
+    <button mat-button>
+        <mat-icon>gamepad</mat-icon>
+    </button>
+</div>

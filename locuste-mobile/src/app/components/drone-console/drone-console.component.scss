@@ -1,0 +1,22 @@
+div {
+    text-align: center;
+    justify-content: space-evenly;
+    margin-bottom:15px;
+  }
+  
+.left-joystick{
+    position: absolute;
+    width: 49%;
+    height:20%;
+    top:40%;
+    left:0;
+    
+}
+  
+.right-joystick{
+    position: absolute;
+    width: 49%;
+    height:20%;
+    top:40%;
+    left:51%;
+}

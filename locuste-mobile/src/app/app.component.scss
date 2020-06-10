@@ -2,11 +2,12 @@
 
 .footer{
     width:100%;
-    position: sticky;
+    position: absolute;
     bottom: 0;
+    height:8vh;
 }
 
 
-h1 {
-    margin:20px;
+a {
+  text-decoration: none;
 }

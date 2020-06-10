@@ -1,8 +1,10 @@
 div {
     text-align: center;
-    justify-content: center;
-}
-
-.control{
-    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom:15px;
+  }
+  
+  mat-tab-group{
+    height:75vh;
+    max-height:75vh;
 }

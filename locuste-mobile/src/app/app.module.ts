@@ -14,15 +14,25 @@ import {MatButtonModule} from "@angular/material/button"
 import {MatDialogModule} from "@angular/material/dialog"
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatFormFieldModule} from "@angular/material/form-field"
+import {MatCardModule} from "@angular/material/card"
 import {MatInputModule} from "@angular/material/input"
 import { FormsModule } from '@angular/forms';
-import { IdentificationPortalComponent } from './components/shared/identification-portal/identification-portal.component'
+import { IdentificationPortalComponent } from './components/shared/identification-portal/identification-portal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { RTSPStreamerComponent } from './components/shared/rtspstreamer/rtspstreamer.component';
+import { FullScreenViewerComponent } from './components/shared/full-screen-viewer/full-screen-viewer.component';
+import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-monitoring.component'
+
 @NgModule({
   declarations: [
     AppComponent,
     DronePreviewComponent,
     DroneConsoleComponent,
-    IdentificationPortalComponent
+    IdentificationPortalComponent,
+    RTSPStreamerComponent,
+    FullScreenViewerComponent,
+    HubMonitoringComponent
   ],
   entryComponents:[
     IdentificationPortalComponent
@@ -39,7 +49,9 @@ import { IdentificationPortalComponent } from './components/shared/identificatio
     MatIconModule,
     MatSidenavModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
