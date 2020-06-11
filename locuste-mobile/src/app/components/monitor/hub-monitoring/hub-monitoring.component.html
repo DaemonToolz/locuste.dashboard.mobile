@@ -9,25 +9,14 @@
                     Opérateurs
                 </mat-card-title>
             </mat-card-header>
-        </mat-card>
-    </mat-tab>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon>power</mat-icon>
-        </ng-template>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    Connections
-                </mat-card-title>
-            </mat-card-header>
             <mat-card-content>
-             
+                <mat-icon svgIcon="error_pc"></mat-icon>
+                <mat-icon svgIcon="warn_pc"></mat-icon>
+                <mat-icon svgIcon="info_pc"></mat-icon>
+                <mat-icon svgIcon="success_pc"></mat-icon>
             </mat-card-content>
         </mat-card>
-       
     </mat-tab>
-
     <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon>device_hub</mat-icon>
@@ -38,7 +27,21 @@
                     Relai et unité de contrôle
                 </mat-card-title>
             </mat-card-header>
+            <mat-card-content>
+                <p><mat-icon svgIcon="error_hub"></mat-icon></p>
+                <p><mat-icon svgIcon="error_hub_automaton"></mat-icon></p>
+                <p><mat-icon svgIcon="warn_hub"></mat-icon></p>
+                <p><mat-icon svgIcon="info_hub"></mat-icon></p>
+                <p><mat-icon svgIcon="info_hub_automaton"></mat-icon></p>
+                <p><mat-icon svgIcon="success_hub"></mat-icon></p>
+                <p><mat-icon svgIcon="success_hub_automaton"></mat-icon></p>
+                <p><mat-icon svgIcon="error_video_server"></mat-icon></p>
+                <p><mat-icon svgIcon="info_video_server"></mat-icon></p>
+                <p><mat-icon svgIcon="warn_video_server"></mat-icon></p>
+                <p><mat-icon svgIcon="success_video_server"></mat-icon></p>
+            </mat-card-content>
         </mat-card>
+       
     </mat-tab>
 
     <mat-tab>
@@ -51,6 +54,12 @@
                     Drones et autoamtes
                 </mat-card-title>
             </mat-card-header>
+            <mat-card-content>
+                <mat-icon svgIcon="error_automaton"></mat-icon>
+                <mat-icon svgIcon="info_automaton"></mat-icon>
+                <mat-icon svgIcon="warn_automaton"></mat-icon>
+                <mat-icon svgIcon="success_automaton"></mat-icon>
+            </mat-card-content>
         </mat-card>
     </mat-tab>
 </mat-tab-group>

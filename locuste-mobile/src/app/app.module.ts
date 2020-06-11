@@ -17,12 +17,14 @@ import {MatFormFieldModule} from "@angular/material/form-field"
 import {MatCardModule} from "@angular/material/card"
 import {MatInputModule} from "@angular/material/input"
 import { FormsModule } from '@angular/forms';
+
 import { IdentificationPortalComponent } from './components/shared/identification-portal/identification-portal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { RTSPStreamerComponent } from './components/shared/rtspstreamer/rtspstreamer.component';
 import { FullScreenViewerComponent } from './components/shared/full-screen-viewer/full-screen-viewer.component';
 import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-monitoring.component'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-
     IdentificationPortalComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule,
     MatDialogModule,
     BrowserModule,
