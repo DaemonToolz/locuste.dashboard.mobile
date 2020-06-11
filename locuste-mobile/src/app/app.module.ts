@@ -25,6 +25,7 @@ import { RTSPStreamerComponent } from './components/shared/rtspstreamer/rtspstre
 import { FullScreenViewerComponent } from './components/shared/full-screen-viewer/full-screen-viewer.component';
 import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-monitoring.component'
 import { HttpClientModule } from '@angular/common/http';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     IdentificationPortalComponent
   ],
   imports: [
+    LeafletModule,
     HttpClientModule,
     FormsModule,
     MatDialogModule,
