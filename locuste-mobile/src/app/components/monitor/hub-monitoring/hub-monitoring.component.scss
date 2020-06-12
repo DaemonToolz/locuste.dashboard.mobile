@@ -3,3 +3,84 @@ mat-tab-group{
     max-height:75vh;
 }
 
+.header-card{
+    position: sticky;
+    top:0;
+    z-index: 100000;
+}
+
+.info-icon {
+    width:50vh;
+    height:100%;
+}
+
+.medium-icon {
+    width:25vh;
+    height:50%;
+}
+
+.small-icon {
+    width:15vh;
+    height:25%;
+}
+
+.centerized {
+    text-align: center;
+    align-content: center;
+}
+
+
+.connecting {
+    background-color: blue;
+}
+
+.connected {
+    background-color: green;
+}
+
+.disconnected {
+    background-color: darken(red,5);
+}
+
+.disconnected-text {
+    color: lighten(red,10);
+}
+
+.relay-div {
+    margin:5px;
+}
+
+.relay-button{
+    line-height: 30px;
+}
+
+
+.icon-text {
+    display: flex;
+    align-items: center;
+}
+
+.mat-icon{
+    margin-right: 5px;
+}
+
+.error-text {
+    color: lighten(red,10);
+}
+
+.warning-text {
+    color: lighten(orange,10);
+}
+
+
+mat-icon.mat-card-avatar {
+    width: auto;
+    height: auto;
+    font-size: 6em;
+  }
+
+  mat-icon.mat-list-avatar {
+    width: auto !important;
+    height: auto !important;
+    font-size: 4em;
+  }

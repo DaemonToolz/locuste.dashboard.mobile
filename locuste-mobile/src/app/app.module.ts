@@ -26,6 +26,11 @@ import { FullScreenViewerComponent } from './components/shared/full-screen-viewe
 import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-monitoring.component'
 import { HttpClientModule } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ControlSocketService } from './services/sockets/control-socket.service';
+import { DroneDiscoveryService } from './services/discovery/drone-discovery.service';
+import { DroneDataService } from './services/drones/drone-data.service';
+import { PingService } from './services/health/ping.service';
+import { OperatorService } from './services/users/operator.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +63,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     MatCardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [DroneDiscoveryService, ControlSocketService, DroneDataService, PingService, OperatorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

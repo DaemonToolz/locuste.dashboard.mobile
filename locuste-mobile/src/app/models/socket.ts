@@ -6,7 +6,7 @@ export enum SocketFunction{
     Reconnecting = "reconnecting",
     OnError = "error",
     OnReconnectError = "reconnect_error",
-    IdentifyOperator="identify_mobile",
+    IdentifyOperator="identify_operator", // identify_mobile
     ReleaseControls="release_controls",
     Authenticate="authenticate",
     RequestModuleRestart="restart_module",

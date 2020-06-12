@@ -4,7 +4,7 @@ import { HttpInterceptorService } from './http-interceptor.service';
 
 describe('HttpInterceptorService', () => {
   let service: HttpInterceptorService;
-
+ 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HttpInterceptorService);

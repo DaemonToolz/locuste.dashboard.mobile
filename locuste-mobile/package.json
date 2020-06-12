@@ -24,6 +24,7 @@
     "@angular/service-worker": "~9.1.1",
     "@asymmetrik/ngx-leaflet": "^7.0.0",
     "@cycjimmy/jsmpeg-player": "^5.0.1",
+    "@types/socket.io-client": "^1.4.33",
     "leaflet": "^1.6.0",
     "material": "^0.4.3",
     "material-design-icons": "^3.0.1",

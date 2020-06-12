@@ -24,7 +24,10 @@
       </a>
 
       <button mat-list-item (click)="authenticate(); drawer.close();">
-        <mat-icon matListIcon>input</mat-icon>
+        <mat-icon *ngIf="myself == null" matListIcon>app_blocking</mat-icon>
+        <mat-icon *ngIf="myself != null && myself.is_anonymous" matListIcon>input</mat-icon>
+        <mat-icon *ngIf="myself != null && !myself.is_anonymous" matListIcon>verified_user</mat-icon>
+  
         <span> Login </span>
       </button>
 
