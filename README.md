@@ -3,6 +3,10 @@ LOCUSTE : Interface graphique MOBILE ANGULAR
 
 <img width="2575" alt="locuste-mobile-banner" src="https://user-images.githubusercontent.com/6602774/84285948-5aec9e80-ab3e-11ea-9a2c-3b4c23b80ad4.png">
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d2740d746019415ba3a21526e7845483)](https://www.codacy.com/manual/axel.maciejewski/locuste.dashboard.mobile?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DaemonToolz/locuste.dashboard.mobile&amp;utm_campaign=Badge_Grade)
+
+
+
 Le project Locuste se divise en 4 grandes sections : 
 * Automate (Drone Automata) PYTHON (https://github.com/DaemonToolz/locuste.drone.automata)
 * Unité de contrôle (Brain) GOLANG (https://github.com/DaemonToolz/locuste.service.brain)
