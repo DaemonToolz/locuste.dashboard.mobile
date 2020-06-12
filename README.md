@@ -7,7 +7,6 @@ LOCUSTE : Interface graphique MOBILE ANGULAR
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=security_rating)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DaemonToolz_locuste.dashboard.mobile&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=DaemonToolz_locuste.dashboard.mobile)
