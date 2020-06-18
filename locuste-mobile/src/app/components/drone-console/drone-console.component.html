@@ -1,6 +1,6 @@
 
-<div class="left-joystick" #left></div>
-<div class="right-joystick" #right></div>
+<div  class="left-joystick" #left></div>
+<div  class="right-joystick" #right></div>
 
 <div class="control">
     <button mat-button class="success">
@@ -22,14 +22,14 @@
     </button>
 </div>
 <div>
-    <app-rtspstreamer  [width]="width" [height]="height"  [drone]="'ANAFI_192.168.42.1'"></app-rtspstreamer>
+    <app-rtspstreamer  [width]="width" [height]="height"  [drone]="selectedDrone"></app-rtspstreamer>
 </div>
 <div class="control">
-    <button mat-button>
+    <button mat-button class="success">
         <mat-icon>help</mat-icon>
     </button>
 
-    <button mat-button>
+    <button mat-button [ngClass]="{'success': joystickVisible, 'error': !joystickVisible}" (click)="toogleJoystick()">
         <mat-icon>gamepad</mat-icon>
     </button>
 </div>

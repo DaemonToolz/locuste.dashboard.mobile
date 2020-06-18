@@ -56,3 +56,16 @@ html, body {
 .critical{
   background-color: darkred ;
 }
+
+.mat-tab-header-pagination {
+  display: none !important;
+  }
+  .mat-tab-header {
+  overflow: scroll !important;
+  }
+  .mat-tab-header::-webkit-scrollbar {
+  display: none !important;
+  }
+  .mat-tab-label-container {
+  overflow: initial !important;
+  }

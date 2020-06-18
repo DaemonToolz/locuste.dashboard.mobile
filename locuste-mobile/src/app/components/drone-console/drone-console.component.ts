@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 declare var require: any;
 const nipplejs = require('nipplejs');
@@ -13,26 +13,20 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   private leftManager: any;
   private rightManager: any;
 
+  private leftOngoing: boolean;
+  private rightOngoing: boolean;
+  
+
   @ViewChild("left") public left: ElementRef;
   @ViewChild("right") public right: ElementRef;
 
   ngAfterViewInit() {
-    var leftOptions = {
-      zone: this.left.nativeElement,
-      mode: "static",
-      position: { bottom: "25%", left: "50%" }
-    };
-    this.leftManager = nipplejs.create(leftOptions);
-
-    var rightOptions = {
-      zone: this.right.nativeElement,
-      mode: "static",
-      position: { bottom: "25%", right: "50%" }
-    };
-    this.rightManager = nipplejs.create(rightOptions);
+   
   }
+
   private _width: number;
   private _height: number;
+  public joystickVisible = false;
   public selectedDrone: string;
 
   public get width() { return this._width }
@@ -44,6 +38,53 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
     this.calculateDim();
   }
 
+  public toogleJoystick(){
+    this.joystickVisible = !this.joystickVisible;
+
+    if(this.joystickVisible){
+      var leftOptions = {
+        zone: this.left.nativeElement,
+        mode: "static",
+        position: { bottom: "25%", left: "50%" }
+      };
+      this.leftManager = nipplejs.create(leftOptions);
+      this.initJoystick("left")
+      var rightOptions = {
+        zone: this.right.nativeElement,
+        mode: "static",
+        position: { bottom: "25%", right: "50%" }
+      };
+      this.rightManager = nipplejs.create(rightOptions);
+      this.initJoystick("right")
+
+    } else {
+      if(this.leftManager != null){
+        this.leftManager.destroy();
+      }
+      if(this.rightManager != null){
+        this.rightManager.destroy();
+      }
+    }
+  }
+
+  private initJoystick(manager: string){
+    const self = this;
+    this[`${manager}Manager`].on('start move end', function (evt, data) {
+      if(evt.type === "start"){
+        this[`${manager}Ongoing`] = true
+      }
+
+      if(evt.type === "end"){
+        this[`${manager}Ongoing`] = false
+      }
+
+      if(evt.type === "move"){
+        //console.log(data);
+        // leftevent + rightevent 
+      }
+    });
+  
+  }
 
   private calculateDim() {
     if (window.outerWidth > window.outerHeight) {

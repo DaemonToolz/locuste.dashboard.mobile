@@ -31,6 +31,7 @@ import { DroneDiscoveryService } from './services/discovery/drone-discovery.serv
 import { DroneDataService } from './services/drones/drone-data.service';
 import { PingService } from './services/health/ping.service';
 import { OperatorService } from './services/users/operator.service';
+import { DroneMapComponent } from './components/shared/drone-map/drone-map.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { OperatorService } from './services/users/operator.service';
     IdentificationPortalComponent,
     RTSPStreamerComponent,
     FullScreenViewerComponent,
-    HubMonitoringComponent
+    HubMonitoringComponent,
+    DroneMapComponent
   ],
   entryComponents:[
     IdentificationPortalComponent

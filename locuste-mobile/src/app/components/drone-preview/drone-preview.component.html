@@ -1,5 +1,5 @@
-<mat-tab-group headerPosition="below">
-    <mat-tab label="Drone n°1">
+<mat-tab-group headerPosition="below" mat-align-tabs="center">
+    <mat-tab *ngFor="let drone of availableDrones" [label]="drone" >
         <div class="control">
             <button mat-button class="warning">
                 <mat-icon> gps_fixed </mat-icon>
@@ -13,27 +13,23 @@
             </button>
         </div>
         <div>
-            <app-rtspstreamer  [width]="width" [height]="height"  [drone]="'ANAFI_192.168.42.1'"></app-rtspstreamer>
+            <app-rtspstreamer  *ngIf="isOnView(drone, ViewsEnum.DroneCameraView)" [width]="width" [height]="height"  [drone]="drone"></app-rtspstreamer>
+            <app-drone-map *ngIf="isOnView(drone, ViewsEnum.DroneMapView)" [height]="height"  [drone]="drone"></app-drone-map>
         </div>
         <div class="control">
-            <button mat-button >
+            <button mat-button  (click)="changeView(drone, ViewsEnum.DroneCameraView)">
                 <mat-icon>camera_alt</mat-icon>
             </button>
-            <button mat-button >
+            <button mat-button  (click)="changeView(drone, ViewsEnum.DroneMapView)">
                 <mat-icon>location_on</mat-icon>
             </button>
-            <a mat-button routerLink="/fullscreen/drone_1">
+            <a mat-button routerLink="/fullscreen/{{drone}}">
                 <mat-icon>fullscreen</mat-icon>
             </a>
-            <a mat-button routerLink="/console/drone_1">
+            <a mat-button routerLink="/console/{{drone}}">
                 <mat-icon>airplay</mat-icon>
             </a>
         </div>
     </mat-tab>
-    <mat-tab label="Drone n°2">
-    </mat-tab>
-    <mat-tab label="Drone n°3">
-    </mat-tab>   
-    <mat-tab label="Drone n°4">
-    </mat-tab>     
+
 </mat-tab-group>
