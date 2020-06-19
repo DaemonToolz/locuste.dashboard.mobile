@@ -1,16 +1,22 @@
 <mat-tab-group headerPosition="below" mat-align-tabs="center">
     <mat-tab *ngFor="let drone of availableDrones" [label]="drone" >
         <div class="control">
-            <button mat-button class="warning">
-                <mat-icon> gps_fixed </mat-icon>
-            </button>
+ 
+            <a mat-button [ngClass]="GPSStrength[getGPSStrength(drone)]"> 
+                <mat-icon> {{getGPSStatus(drone) === GPSStatus.ready?'gps_fixed':getGPSStatus(drone) === GPSStatus.unavailable?'gps_not_fixed':'gps_off'}} </mat-icon>
+            </a>
 
-            <button mat-button class="warning">
-                <mat-icon> signal_wifi_4_bar </mat-icon>
-            </button>
-            <button mat-button class="error">
+
+            <a mat-button [ngClass]="WifiStrength[getWifiStrength(drone)]"> 
+                <mat-icon> {{getWifiStatus(drone) === WifiStatus.ready?'signal_wifi_4_bar':'signal_wifi_off'}} </mat-icon>
+            </a>
+
+            <a mat-button [ngClass]="BatteryStatus[getBatteryStatus(drone)]"> 
                 <mat-icon> battery_charging_full </mat-icon>
-            </button>
+            </a>
+            
+
+          
         </div>
         <div>
             <app-rtspstreamer  *ngIf="isOnView(drone, ViewsEnum.DroneCameraView)" [width]="width" [height]="height"  [drone]="drone"></app-rtspstreamer>

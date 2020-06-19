@@ -3,23 +3,25 @@
 <div  class="right-joystick" #right></div>
 
 <div class="control">
-    <button mat-button class="success">
-        <mat-icon> android </mat-icon>
-    </button>
 
-    <button mat-button class="warning">
-        <mat-icon> gps_fixed </mat-icon>
-    </button>
+    <a mat-button [ngClass]="GPSStrength[getGPSStrength]"> 
+        <mat-icon> {{getGPSStatus === GPSStatus.ready?'gps_fixed':getGPSStatus === GPSStatus.unavailable?'gps_not_fixed':'gps_off'}} </mat-icon>
+    </a>
 
-    <button mat-button class="warning">
-        <mat-icon> signal_wifi_4_bar </mat-icon>
-    </button>
-    <button mat-button class="error">
+
+    <a mat-button [ngClass]="WifiStrength[getWifiStrength]"> 
+        <mat-icon> {{getWifiStatus === WifiStatus.ready?'signal_wifi_4_bar':'signal_wifi_off'}} </mat-icon>
+    </a>
+
+
+    <a mat-button [ngClass]="BatteryStatus[getBatteryStatus]">
         <mat-icon> battery_charging_full </mat-icon>
-    </button>
-    <button mat-button class="success">
-        <mat-icon> lock_open </mat-icon>
-    </button>
+    </a>
+
+    <a mat-button  [ngClass]="{'high':!isTested, 'medium':isTested}">
+        <mat-icon> {{isTested?'lock':'lock_open'}} </mat-icon>
+    </a>
+
 </div>
 <div>
     <app-rtspstreamer  [width]="width" [height]="height"  [drone]="selectedDrone"></app-rtspstreamer>
@@ -28,6 +30,10 @@
     <button mat-button class="success">
         <mat-icon>help</mat-icon>
     </button>
+
+    <a mat-button [ngClass]="{'high':!isManual, 'medium':isManual}">
+        <mat-icon> {{isManual?'person':'android'}} </mat-icon>
+    </a>
 
     <button mat-button [ngClass]="{'success': joystickVisible, 'error': !joystickVisible}" (click)="toogleJoystick()">
         <mat-icon>gamepad</mat-icon>

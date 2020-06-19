@@ -32,6 +32,8 @@ import { DroneDataService } from './services/drones/drone-data.service';
 import { PingService } from './services/health/ping.service';
 import { OperatorService } from './services/users/operator.service';
 import { DroneMapComponent } from './components/shared/drone-map/drone-map.component';
+import { LogUpdateService } from './services/pwa/log-update.service';
+import { AppUpdaterService } from './services/pwa/app-updater.service';
 
 @NgModule({
   declarations: [
@@ -63,9 +65,10 @@ import { DroneMapComponent } from './components/shared/drone-map/drone-map.compo
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
+
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [DroneDiscoveryService, ControlSocketService, DroneDataService, PingService, OperatorService],
+  providers: [DroneDiscoveryService, ControlSocketService, DroneDataService, PingService, OperatorService, LogUpdateService, AppUpdaterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

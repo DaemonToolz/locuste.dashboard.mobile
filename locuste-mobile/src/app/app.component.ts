@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ControlSocketService } from './services/sockets/control-socket.service';
 import { OperatorService } from './services/users/operator.service';
 import { Operator } from './models/operator';
+import { LogUpdateService } from './services/pwa/log-update.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ import { Operator } from './models/operator';
 export class AppComponent {
   public title = 'locuste-mobile';
 
-  constructor(private socket: ControlSocketService, private operatorService: OperatorService, private matIconRegistry: MatIconRegistry, private dialog: MatDialog, private domSanitizer: DomSanitizer) {
+  constructor(public appUpdater : LogUpdateService, private socket: ControlSocketService, private operatorService: OperatorService, private matIconRegistry: MatIconRegistry, private dialog: MatDialog, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(`drone_icon`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/drone.svg`));
     this.matIconRegistry.addSvgIcon(`error_automaton`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/error_automaton.svg`));
     this.matIconRegistry.addSvgIcon(`error_hub_automaton`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/error_hub_automaton.svg`));
@@ -46,6 +47,10 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon(`warn_pc_hub`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/warn_pc_hub.svg`));
     this.matIconRegistry.addSvgIcon(`warn_video_server`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/warn_video_server.svg`));
 
+
+    window.addEventListener('beforeinstallprompt', event => {
+      this.appUpdater.installAvaiable = event;
+    });
   }
 
   public authenticate() {
@@ -63,6 +68,9 @@ export class AppComponent {
     }
   }
 
+  public installPwa(): void {
+    this.appUpdater.installAvaiable.prompt();
+  }
 
   public get myself(): Operator{
     return this.operatorService.myself

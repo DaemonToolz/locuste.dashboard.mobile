@@ -7,6 +7,7 @@ import { DroneCoordinates, DroneFlightCoordinates, SimplifiedDroneFlightCoordina
 import { environment } from 'src/environments/environment';
 import { SocketFunction, MyListeners } from 'src/app/models/socket';
 import * as io from 'socket.io-client';
+import { SchedulerSummarizedData, DroneSummarizedStatus } from 'src/app/models/autopilot';
 @Injectable({
   providedIn: 'root'
 })
@@ -39,6 +40,9 @@ export class ControlSocketService {
   public positionUpdate$ : BehaviorSubject<DroneCoordinates> = new BehaviorSubject(null);
   public autopilotUpdate$ : BehaviorSubject<DroneFlightCoordinates> = new BehaviorSubject(null);
 
+  public autopilotStatusUpdate$ : BehaviorSubject<SchedulerSummarizedData> = new BehaviorSubject(null);
+  public flyingStatusUpdate$ : BehaviorSubject<DroneSummarizedStatus> = new BehaviorSubject(null);
+  
   public targetUpdate$ : BehaviorSubject<SimplifiedDroneFlightCoordinates> = new BehaviorSubject(null);
 
   constructor() { 
@@ -148,6 +152,13 @@ export class ControlSocketService {
         this.autopilotUpdate$.next(update)
       })
 
+      ControlSocketService.Socket.on(MyListeners.OnAutopilotUpdate, (update : SchedulerSummarizedData) => {
+        this.autopilotStatusUpdate$.next(update)
+      })
+
+      ControlSocketService.Socket.on(MyListeners.OnFlyingStatusUpdate, (update : DroneSummarizedStatus) => {
+        this.flyingStatusUpdate$.next(update)
+      })
 
 
       ControlSocketService.Socket.on(MyListeners.OnTargetRecalculated, (update : SimplifiedDroneFlightCoordinates) => {

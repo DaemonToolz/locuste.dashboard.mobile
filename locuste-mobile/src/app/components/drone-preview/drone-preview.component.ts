@@ -5,6 +5,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DroneDataService } from 'src/app/services/drones/drone-data.service';
 import { OperatorService } from 'src/app/services/users/operator.service';
 import { HealthMonitoringService } from 'src/app/services/health/health-monitoring.service';
+import { AutoPilotDataService } from 'src/app/services/autopilot/auto-pilot-data.service';
 
 @Component({
   selector: 'app-drone-preview',
@@ -34,7 +35,7 @@ export class DronePreviewComponent implements OnInit {
   }
 
 
-  public constructor(private droneData :DroneDataService,  private operatorService: OperatorService, private droneStatusController: HealthMonitoringService)  { 
+  public constructor(private autoPilotService: AutoPilotDataService, private droneData :DroneDataService,  private operatorService: OperatorService, private droneStatusController: HealthMonitoringService)  { 
     this.calculateDim();
   } 
 
@@ -70,5 +71,61 @@ export class DronePreviewComponent implements OnInit {
     return this._views.has(drone) ? this._views.get(drone) === view : false   
   }
 
+  public droneBattery(drone: string){
+    return (this.droneData.droneBattery(drone))
+  }
+
+  public getBatteryStatus(drone: string){
+    return (this.droneData.batteryStatus(drone))
+  }
+
+  public getDroneLeader(name: string){
+    return this.operatorService.getLeader(name);
+  }
+
+  public getAutopilotStatus(droneName: string){
+    return this.autoPilotService.AutoPilot(droneName)
+  }
+
+  public getFlyingStatus(droneName: string){
+    return this.droneData.droneFlyingStatuses(droneName)
+  }
+
+  public isAutopilotOperational(droneName: string):boolean{
+    let autopilot = this.autoPilotService.AutoPilot(droneName)
+    return autopilot.is_running &&   autopilot.is_active
+  }
+
+  public isAutopilotInactive(droneName: string):boolean{
+    let autopilot = this.autoPilotService.AutoPilot(droneName)
+    return autopilot.is_running &&  !autopilot.is_active
+  }
+
+  public isAutopilotOffline(droneName: string):boolean{
+    let autopilot = this.autoPilotService.AutoPilot(droneName)
+    return !autopilot.is_running
+  }
+
+  public getGPSStatus(droneName: string) :GPSStatus{
+    let coordinates = this.droneData.droneCoordinates(droneName)
+    if(coordinates == null) { return GPSStatus.not_registered } 
+    if((coordinates.latitude === coordinates.longitude && coordinates.longitude === 500)) return GPSStatus.unavailable
+    return GPSStatus.ready
+  }
+
+  public getGPSStrength(droneName: string) : GPSStrength{
+    return this.droneData.gpsStrength(droneName)
+  }
+
+
+  public getWifiStatus(droneName: string) :WifiStatus{
+    let coordinates = this.droneData.droneWifi(droneName)
+    if(coordinates == -500) { return WifiStatus.unavailable } 
+    return WifiStatus.ready
+  }
+
+  public getWifiStrength(droneName: string) : WifiStrength{
+    return this.droneData.wifiStrength(droneName)
+  }
 
 }

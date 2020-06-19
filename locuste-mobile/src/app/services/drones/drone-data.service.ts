@@ -7,6 +7,9 @@ import { DroneDiscoveryService } from '../discovery/drone-discovery.service';
 import { HealthMonitoringService } from '../health/health-monitoring.service';
 import { retry, take } from 'rxjs/operators';
 import { ControlSocketService } from '../sockets/control-socket.service';
+import { DroneSummarizedStatus } from 'src/app/models/autopilot';
+import { AutoPilotDataService } from '../autopilot/auto-pilot-data.service';
+import { DroneFlyingStatusesService } from './drone-flying-statuses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,9 @@ export class DroneDataService {
 
   private _droneStatuses: DroneNotification[] = [];
   private _droneInternalStatuses: Map<string, Map<InternalStatuses, any>> = new Map<string, Map<InternalStatuses, any>>();
-
+  private _droneCoordinates: Map<string, DroneCoordinates> = new Map<string, DroneCoordinates>();
+  private _droneFlyingStatus: Map<string, DroneSummarizedStatus> = new Map<string, DroneSummarizedStatus>();
+  
   public get availableDrones(): string[] {
     return this._availableDrones
   }
@@ -75,16 +80,24 @@ export class DroneDataService {
   }
 
 
-  constructor(private droneDiscovery: DroneDiscoveryService, private connector: ControlSocketService, droneMonitorService: HealthMonitoringService) {
+  constructor(private _droneFlyingStatusesService: DroneFlyingStatusesService, private droneAutopilotService: AutoPilotDataService, private droneDiscovery: DroneDiscoveryService, private connector: ControlSocketService, droneMonitorService: HealthMonitoringService) {
     this.droneDiscovery.getDroneInfo().pipe(retry(20), take(1)).subscribe(data => {
       this._availableDrones = data;
       data.forEach(name => {
         droneMonitorService.forceUpdate(name)
+        this.droneAutopilotService.refreshAutopilot(name)
       })
+
+      this._subscriptionPool.push(this.connector.positionUpdate$.subscribe((position: DroneCoordinates) => {
+        if (position != null) {
+          this._droneCoordinates.set(position.id, position);
+        }
+      }));
+
     })
 
     this._subscriptionPool.push(this.connector.internalStatusUpdate$.subscribe((notification: DroneInternalStatusNotification) => {
-      if (notification != null) {
+      if(notification != null){
         if (!this._droneInternalStatuses.has(notification.id)) {
           this._droneInternalStatuses.set(notification.id, new Map<InternalStatuses, any>())
         }
@@ -92,6 +105,12 @@ export class DroneDataService {
       }
     }))
 
+
+    this._subscriptionPool.push(this.connector.flyingStatusUpdate$.subscribe((notification: DroneSummarizedStatus) => {
+      if(notification != null){
+        this._droneFlyingStatus.set(notification.drone_name, notification);
+      }
+    }))
 
     this._subscriptionPool.push(this.connector.droneEvents$.subscribe((notification: DroneNotification) => {
 
@@ -120,7 +139,34 @@ export class DroneDataService {
       }
     }))
 
+    this._droneFlyingStatusesService.fetchAllFlyingStatuses().pipe(take(1)).subscribe((result : Map<string,DroneSummarizedStatus>)  => {
+      result = new Map(Object.entries(result)) // Bug, l'objet envoyé n'est pas casté en map par défaut
+      if(result != null && result.size > 0){
+        result.forEach(value => {
+          this._droneFlyingStatus.set(value.drone_name,value);
+          
+        })
+      }
+    })
+
 
   }
+
+
+  public droneFlyingStatuses(name: string): DroneSummarizedStatus {
+    if (!this._droneFlyingStatus.has(name)) {
+      return null
+    }
+    return this._droneFlyingStatus.get(name)
+  }
+
+  public droneCoordinates(name: string): DroneCoordinates {
+    if (!this._droneCoordinates.has(name)) {
+      return null
+    }
+    return this._droneCoordinates.get(name)
+  }
+
+
 
 }

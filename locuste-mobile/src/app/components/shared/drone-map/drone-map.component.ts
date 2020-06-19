@@ -5,6 +5,8 @@ import { Boundaries } from 'src/app/models/map';
 import { take } from 'rxjs/operators';
 import { latLng, tileLayer, LatLngBounds, Map, marker, Layer, icon , Marker, LatLng} from 'leaflet';
 import { MapService } from 'src/app/services/maps/map.service';
+import { ControlSocketService } from 'src/app/services/sockets/control-socket.service';
+import { AutoPilotDataService } from 'src/app/services/autopilot/auto-pilot-data.service';
 
 @Component({
   selector: 'app-drone-map',
@@ -29,18 +31,78 @@ export class DroneMapComponent implements OnInit {
   private CurrentOrder : Marker<any>
   private PreviousOrder : Marker<any>
   private onTarget: Subscription;
-
+  private onAutopilot: Subscription;
+  
   private myBoundaries: Boundaries
-  private _myPhone: Marker<any>;
 
-  constructor(private mapService: MapService) { 
+  private _myPhone: Marker<any>;
+  private _autoPilotTarget: Marker<any>
+
+
+  constructor(private mapService: MapService, private autoPilotService: AutoPilotDataService, private updater: ControlSocketService) { 
+    this.onUpdate = this.updater.positionUpdate$.subscribe((position: DroneCoordinates) => {
+      if(position != null && this.myMap != null && position.id === this.drone){
+        this._lastCoordinates = position;
+
+        this.dronePosMarker.setLatLng(latLng(this._lastCoordinates.latitude,  this._lastCoordinates.longitude))
+        this.myMap.setZoomAround(this.dronePosMarker.getLatLng(), 19)
+      }
+    });
+
     this.mapService.getMapBoundaries().pipe(take(1)).subscribe(result => {
       this.myBoundaries = result;
       if(this.myMap != null && result != null){
         this.defineBoundaries()
       }
     })
+
+    this.onAutopilot = this.autoPilotService.autopilotUpdate$.subscribe(update => {
+      if(update != null){
+        if (update.drone_name === this.drone){
+          if(this.CurrentOrder == null ){
+            if(this._targetCoordinates != null && this._targetCoordinates.latitude == update.coordinates.latitude && this._targetCoordinates.longitude == update.coordinates.longitude){
+              this.removeMark("CurrentOrder")
+            } else {
+              this.addMark("CurrentOrder", update.coordinates, "Destination actuelle")
+            }
+          } else {
+            this.setMark("CurrentOrder", update.coordinates)
+          }
+
+          if(this.PreviousOrder == null ){
+            this.addMark("PreviousOrder", update.metadata.previous, "Destination précédente",1)
+          } else {
+            this.setMark("PreviousOrder", update.metadata.previous)
+          }
+
+          if(this.NextOrder == null ){
+            this.addMark("NextOrder", update.metadata.next, "Prochaine destination",0.5)
+          } else {
+            if(update.metadata.next.latitude=== update.coordinates.latitude && update.metadata.next.longitude === update.coordinates.longitude && update.metadata.next.altitude === update.coordinates.altitude){
+              this.removeMark("NextOrder")
+            } else {
+              this.setMark("NextOrder", update.metadata.next)
+            }
+          }
+        }
+      }
+    })
+
+
+    this.onTarget = this.autoPilotService.targetUpdate$.subscribe(update => {
+      if(update != null){
+        if (update.name === this.drone){
+          this._targetCoordinates = update;
+          if(this._autoPilotTarget == null ){
+            this.addMarkFromLatLng("_autoPilotTarget", latLng(update.latitude, update.longitude), "Emplacement du déplacement voulu")
+          } else {
+            this.setMarkFromLatLng("_autoPilotTarget", latLng(update.latitude, update.longitude))
+          }
+        } 
+      }
+    })
     
+
     this.options = {
       layers: [
         tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 14,  })
@@ -50,7 +112,9 @@ export class DroneMapComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.onUpdate?.unsubscribe();
+    this.onUpdate.unsubscribe();
+    this.onTarget.unsubscribe();
+    this.onAutopilot.unsubscribe();
   }
 
 
@@ -140,7 +204,7 @@ export class DroneMapComponent implements OnInit {
     }
 
     if(markName.includes("_myPhone")){
-      iconUrl = "assets/images/marker-icon.png"
+      iconUrl = "assets/images/user_marker.png"
       hwArray = [40,40]
       anchorArray = [20,20]
     }

@@ -31,7 +31,10 @@
         <span> Login </span>
       </button>
 
-
+      <button *ngIf="appUpdater.installAvaiable" (click)="installPwa()">
+        <mat-icon> system_update </mat-icon>
+        <span> Installer </span> 
+      </button>
     </mat-action-list>
 
   </mat-drawer>
