@@ -9,6 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ControlSocketService } from 'src/app/services/sockets/control-socket.service';
 import { CommandRequesterService } from 'src/app/services/drones/command-requester.service';
 import { AutoPilotDataService } from 'src/app/services/autopilot/auto-pilot-data.service';
+import { interval, Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+import { JoystickEvent, JoystickType } from 'src/app/models/joystick';
 declare var require: any;
 const nipplejs = require('nipplejs');
 
@@ -31,6 +34,10 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   private rightOngoing: boolean;
   
 
+  private rightEvent: JoystickEvent
+  private leftEvent: JoystickEvent;
+   
+
   @ViewChild("left") public left: ElementRef;
   @ViewChild("right") public right: ElementRef;
 
@@ -49,6 +56,17 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute, private droneSettingsService: DroneSettingsService, 
     private operatorService: OperatorService, private droneData :DroneDataService, private connector: ControlSocketService, private requester :CommandRequesterService, private droneStatusController: HealthMonitoringService, private dialog: MatDialog, private autoPilotService: AutoPilotDataService) {
     this.selectedDrone = this.route.snapshot.paramMap.get('droneid');
+
+    this.rightEvent = new JoystickEvent();
+    this.leftEvent = new JoystickEvent();
+
+    this.leftEvent.payload = {up: 0, rotation:0};
+    this.rightEvent.payload = {yaw: 0, roll:0};
+    
+    this.leftEvent.joystick_type = JoystickType.AltitutdeJoystick
+    this.rightEvent.joystick_type = JoystickType.SpeedJoystick
+    
+    this.leftEvent.drone_id = this.rightEvent.drone_id = this.selectedDrone;
 
     this.calculateDim();
   }
@@ -85,17 +103,50 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   private initJoystick(manager: string){
     const self = this;
     this[`${manager}Manager`].on('start move end', function (evt, data) {
+      //console.log(evt)
+      //console.log(data)
       if(evt.type === "start"){
-        this[`${manager}Ongoing`] = true
+        // Start tilting and keep it this way
+        self[`${manager}Ongoing`] = true
+        self[`init_${manager}Interval`]();
       }
 
       if(evt.type === "end"){
-        this[`${manager}Ongoing`] = false
+        switch(manager){
+          case "left":
+            self.leftEvent.payload.up = 0
+            self.leftEvent.payload.rotation = 0;
+            break;
+          case "right":
+            self.rightEvent.payload.yaw = 0
+            self.rightEvent.payload.roll = 0;
+            break;
+        } 
+
+        // Stop tilting and keep it this way
+        self[`${manager}Ongoing`] = false
+      
+        // Quoiqu'il se passe, il faut ordonner l'arrêt de l'UAV (ne pas compter sur l'observable)
+        self.connector.sendCommand( self[`${manager}Event`])
       }
 
       if(evt.type === "move"){
-        //console.log(data);
-        // leftevent + rightevent 
+        // Updating tilting data
+        //      090 
+        // 180  NJS  000
+        //      270
+        let vector = data.vector;
+        switch(manager){
+          case "left":
+            self.leftEvent.payload.up = (vector.y * 100)
+            self.leftEvent.payload.rotation = (vector.x * 100);
+            break;
+          case "right":
+            self.rightEvent.payload.yaw = (vector.x * 100)
+            self.rightEvent.payload.roll = (vector.y * 100);
+            break;
+        } 
+
       }
     });
   
@@ -181,4 +232,18 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
     return this.droneData.wifiStrength(this.selectedDrone)
   }
 
+  private init_leftInterval(){
+    const self = this
+    interval(25).pipe(takeWhile(val => this.leftOngoing)).subscribe(()=>{
+      self.connector.sendCommand(self.leftEvent)
+    })
+  }
+
+
+  private init_rightInterval(){
+    const self = this;
+    interval(25).pipe(takeWhile(val => this.rightOngoing)).subscribe(()=>{
+      self.connector.sendCommand(self.rightEvent)
+    })
+  }
 }

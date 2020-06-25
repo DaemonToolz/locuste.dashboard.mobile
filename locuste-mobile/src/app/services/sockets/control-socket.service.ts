@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { SocketFunction, MyListeners } from 'src/app/models/socket';
 import * as io from 'socket.io-client';
 import { SchedulerSummarizedData, DroneSummarizedStatus } from 'src/app/models/autopilot';
+import { JoystickEvent } from 'src/app/models/joystick';
 @Injectable({
   providedIn: 'root'
 })
@@ -170,13 +171,14 @@ export class ControlSocketService {
   }
 
 
-  public sendCommand(drone: string, key: number){
-    ControlSocketService.Socket.emit("key_pressed", {"drone_id":drone, "key_pressed": key});
+  public sendCommand(event : JoystickEvent){
+    ControlSocketService.Socket.emit("joystick_event", {"event": event});
   }
 
   public authenticate(name: string){
     ControlSocketService.Socket.emit(SocketFunction.Authenticate, {"name":name});
   }
+
 
   public releaseControls(){
     ControlSocketService.Socket.emit(SocketFunction.ReleaseControls, {});
