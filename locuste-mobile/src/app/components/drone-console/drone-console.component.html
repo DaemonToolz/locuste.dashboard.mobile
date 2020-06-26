@@ -31,7 +31,7 @@
         <mat-icon>help</mat-icon>
     </button>
 
-    <a mat-button [ngClass]="{'high':!isManual, 'medium':isManual}">
+    <a mat-button  (click)="changeFlightModel()" [ngClass]="{'high':!isManual, 'medium':isManual}">
         <mat-icon> {{isManual?'person':'android'}} </mat-icon>
     </a>
 

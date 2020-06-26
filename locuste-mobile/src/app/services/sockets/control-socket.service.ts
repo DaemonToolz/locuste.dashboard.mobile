@@ -172,7 +172,7 @@ export class ControlSocketService {
 
 
   public sendCommand(event : JoystickEvent){
-    ControlSocketService.Socket.emit("joystick_event", {"event": event});
+    ControlSocketService.Socket.emit("joystick_event",  event);
   }
 
   public authenticate(name: string){

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BatteryStatus, GPSStatus, GPSStrength, WifiStatus, WifiStrength } from 'src/app/models/drone';
 import { DroneSettingsService } from 'src/app/services/drones/drone-settings.service';
@@ -10,8 +10,9 @@ import { ControlSocketService } from 'src/app/services/sockets/control-socket.se
 import { CommandRequesterService } from 'src/app/services/drones/command-requester.service';
 import { AutoPilotDataService } from 'src/app/services/autopilot/auto-pilot-data.service';
 import { interval, Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
-import { JoystickEvent, JoystickType } from 'src/app/models/joystick';
+import { takeWhile, take } from 'rxjs/operators';
+import { JoystickEvent, ControlType } from 'src/app/models/joystick';
+import { ManualCommandRequest } from 'src/app/models/commands';
 declare var require: any;
 const nipplejs = require('nipplejs');
 
@@ -20,7 +21,7 @@ const nipplejs = require('nipplejs');
   templateUrl: './drone-console.component.html',
   styleUrls: ['./drone-console.component.scss']
 })
-export class DroneConsoleComponent implements OnInit, AfterViewInit {
+export class DroneConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
   public BatteryStatus = BatteryStatus;
   public GPSStatus = GPSStatus;
   public GPSStrength = GPSStrength;
@@ -33,9 +34,8 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   private leftOngoing: boolean;
   private rightOngoing: boolean;
   
-
-  private rightEvent: JoystickEvent
-  private leftEvent: JoystickEvent;
+  private controlledElement: ControlType; // Incoming changes
+  private event: JoystickEvent
    
 
   @ViewChild("left") public left: ElementRef;
@@ -53,23 +53,28 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   public get width() { return this._width }
   public get height() { return this._height }
 
-  constructor(private route: ActivatedRoute, private droneSettingsService: DroneSettingsService, 
+  constructor(private route: ActivatedRoute, private droneSettingsService: DroneSettingsService,  private request: CommandRequesterService,
     private operatorService: OperatorService, private droneData :DroneDataService, private connector: ControlSocketService, private requester :CommandRequesterService, private droneStatusController: HealthMonitoringService, private dialog: MatDialog, private autoPilotService: AutoPilotDataService) {
     this.selectedDrone = this.route.snapshot.paramMap.get('droneid');
 
-    this.rightEvent = new JoystickEvent();
-    this.leftEvent = new JoystickEvent();
-
-    this.leftEvent.payload = {up: 0, rotation:0};
-    this.rightEvent.payload = {yaw: 0, roll:0};
-    
-    this.leftEvent.joystick_type = JoystickType.AltitutdeJoystick
-    this.rightEvent.joystick_type = JoystickType.SpeedJoystick
-    
-    this.leftEvent.drone_id = this.rightEvent.drone_id = this.selectedDrone;
+    this.event = new JoystickEvent();
+    this.event.payload = {flag:this.isOngoing ,pitch: 0, roll:0, throttle: 0, yaw:0};
+    this.event.drone_id = this.selectedDrone;
 
     this.calculateDim();
   }
+  ngOnDestroy(): void {
+    this.changeFlightModel(true);
+  }
+
+  public changeFlightModel(forceAutomatic : boolean = false){
+    if(this.isManual || forceAutomatic){
+      this.request.sendCommand(this.selectedDrone, ManualCommandRequest.RequestAutomaticFlight).pipe(take(1)).subscribe()
+    } else {
+      this.request.sendCommand(this.selectedDrone, ManualCommandRequest.RequestManualFlight).pipe(take(1)).subscribe()
+    }
+  }
+
 
   public toogleJoystick(){
     this.joystickVisible = !this.joystickVisible;
@@ -103,47 +108,50 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
   private initJoystick(manager: string){
     const self = this;
     this[`${manager}Manager`].on('start move end', function (evt, data) {
-      //console.log(evt)
-      //console.log(data)
       if(evt.type === "start"){
         // Start tilting and keep it this way
         self[`${manager}Ongoing`] = true
-        self[`init_${manager}Interval`]();
+        self.isOngoing = self.leftOngoing || self.rightOngoing
+        self.initInterval();
       }
 
       if(evt.type === "end"){
+        
         switch(manager){
           case "left":
-            self.leftEvent.payload.up = 0
-            self.leftEvent.payload.rotation = 0;
+            self.event.payload.throttle = 0
+            self.event.payload.yaw = 0;
             break;
           case "right":
-            self.rightEvent.payload.yaw = 0
-            self.rightEvent.payload.roll = 0;
+            self.event.payload.pitch = 0
+            self.event.payload.roll = 0;
             break;
         } 
 
         // Stop tilting and keep it this way
         self[`${manager}Ongoing`] = false
-      
+        self.isOngoing = self.leftOngoing || self.rightOngoing
+        if(!self.isOngoing){
+          self.intervalCreated = false;
+        }
         // Quoiqu'il se passe, il faut ordonner l'arrêt de l'UAV (ne pas compter sur l'observable)
-        self.connector.sendCommand( self[`${manager}Event`])
+        self.connector.sendCommand( self.event)
       }
 
       if(evt.type === "move"){
-        // Updating tilting data
+        // throttledating tilting data
         //      090 
         // 180  NJS  000
         //      270
         let vector = data.vector;
         switch(manager){
           case "left":
-            self.leftEvent.payload.up = (vector.y * 100)
-            self.leftEvent.payload.rotation = (vector.x * 100);
+            self.event.payload.throttle = Math.floor( vector.y * 100)
+            self.event.payload.yaw = Math.floor( vector.x * 100);
             break;
           case "right":
-            self.rightEvent.payload.yaw = (vector.x * 100)
-            self.rightEvent.payload.roll = (vector.y * 100);
+            self.event.payload.pitch = Math.floor(vector.y * 100)
+            self.event.payload.roll = Math.floor( vector.x * 100);
             break;
         } 
 
@@ -232,18 +240,23 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit {
     return this.droneData.wifiStrength(this.selectedDrone)
   }
 
-  private init_leftInterval(){
-    const self = this
-    interval(25).pipe(takeWhile(val => this.leftOngoing)).subscribe(()=>{
-      self.connector.sendCommand(self.leftEvent)
-    })
-  }
+
+  private isOngoing: boolean = false;
 
 
-  private init_rightInterval(){
-    const self = this;
-    interval(25).pipe(takeWhile(val => this.rightOngoing)).subscribe(()=>{
-      self.connector.sendCommand(self.rightEvent)
-    })
+  private intervalCreated: boolean = false;
+
+  private initInterval(){
+    if(!this.isOngoing){
+      this.intervalCreated = false;
+    }
+
+    if(!this.intervalCreated && this.isOngoing){
+      const self = this
+      interval(25).pipe(takeWhile(_ => this.isOngoing)).subscribe(()=>{
+        self.connector.sendCommand(self.event)
+      })
+      this.intervalCreated = true;
+    } 
   }
 }
