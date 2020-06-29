@@ -1,0 +1,40 @@
+{
+    "data": [
+        {"icon": "check_circle", "content":"Module actif", "description":"Système / Sous-système opérationnel"},
+        {"icon": "check_circle", "content":"Module actif", "class": "warning-text","description":"Système / Sous-système pouvant intérférer"},
+        {"icon": "check_circle", "content":"Module actif", "class": "error-text","description":"Système / Sous-système d'erreur actif (état d'erreur, activation du failover)"},
+       
+        {"icon": "remove_circle", "content":"Module inactif", "class": "error-text", "description":"Système / Sous-système hors-ligne"},
+        {"icon": "remove_circle", "content":"Module inactif", "description":"Système / Sous-système inactif (état OK)"},
+
+        {"is_custom":true, "icon": "success_pc", "class": "info-section","icon_class": "info-icon", "description":"Poste de contrôle OK"},
+        {"is_custom":true, "icon": "warn_pc", "class": "info-section","icon_class": "info-icon", "description":"Attention requise sur poste de contrôle"},
+        {"is_custom":true, "icon": "error_pc", "class": "info-section","icon_class": "info-icon", "description":"Poste de contrôle KO"},
+        {"is_custom":true, "icon": "info_pc", "class": "info-section","icon_class": "info-icon", "description":"Action en cours sur Poste de contrôle"},
+
+        {"is_custom":true, "icon": "success_pc_hub", "class": "info-section","icon_class": "large-info-icon", "description":"Connexion PC - UC OK"},
+        {"is_custom":true, "icon": "error_pc_hub", "class": "info-section","icon_class": "large-info-icon", "description":"Connexion PC - UC KO"},
+        {"is_custom":true, "icon": "info_pc_hub", "class": "info-section","icon_class": "large-info-icon", "description":"Reconnexion PC - UC en cours"},
+
+        {"is_custom":true, "icon": "success_hub", "class": "info-section","icon_class": "info-icon", "description":"Unité de contrôle OK"},
+        {"is_custom":true, "icon": "warn_hub", "class": "info-section","icon_class": "info-icon", "description":"Attention requise sur Unité de contrôle"},
+        {"is_custom":true, "icon": "error_hub", "class": "info-section","icon_class": "info-icon", "description":"Unité de contrôle KO"},
+        {"is_custom":true, "icon": "info_hub", "class": "info-section","icon_class": "info-icon", "description":"Action en cours sur Unité de contrôle"},
+
+        {"is_custom":true, "icon": "success_video_server", "class": "info-section","icon_class": "info-icon", "description":"Connexion flux vidéo OK"},
+        {"is_custom":true, "icon": "warn_video_server", "class": "info-section","icon_class": "info-icon", "description":"Attention requise sur le flux vidéo"},
+        {"is_custom":true, "icon": "error_video_server", "class": "info-section","icon_class": "info-icon", "description":"Flux vidéo KO"},
+        {"is_custom":true, "icon": "info_video_server", "class": "info-section","icon_class": "info-icon", "description":"Reconnexion au flux vidéo"},
+
+        {"is_custom":true, "icon": "success_hub_automaton", "class": "info-section","icon_class": "large-info-icon", "description":"Connexion à l'automate OK"},
+        {"is_custom":true, "icon": "error_hub_automaton", "class": "info-section","icon_class": "large-info-icon", "description":"Connexion à l'automate KO"},
+        {"is_custom":true, "icon": "info_hub_automaton", "class": "info-section","icon_class": "large-info-icon", "description":"Action en cours sur Automate"},
+
+        {"is_custom":true, "icon": "success_automaton", "class": "info-section","icon_class": "info-icon", "description":"Automate OK"},
+        {"is_custom":true, "icon": "warn_automaton", "class": "info-section","icon_class": "info-icon", "description":"Attention requise sur Automate"},
+        {"is_custom":true, "icon": "error_automaton", "class": "info-section","icon_class": "info-icon", "description":"Automate KO"},
+        {"is_custom":true, "icon": "info_automaton", "class": "info-section","icon_class": "info-icon", "description":"Action en cours sur Automate"}
+
+
+    ]
+}

@@ -27,15 +27,16 @@
     <app-rtspstreamer  [width]="width" [height]="height"  [drone]="selectedDrone"></app-rtspstreamer>
 </div>
 <div class="control">
+
+    <a mat-button *ngIf="myself != null && !myself.is_anonymous" (click)="changeFlightModel()" [ngClass]="{'high':!isManual, 'medium':isManual}">
+        <mat-icon> {{isManual?'person':'android'}} </mat-icon>
+    </a>
+    
     <button mat-button class="success">
         <mat-icon>help</mat-icon>
     </button>
 
-    <a mat-button  (click)="changeFlightModel()" [ngClass]="{'high':!isManual, 'medium':isManual}">
-        <mat-icon> {{isManual?'person':'android'}} </mat-icon>
-    </a>
-
-    <button mat-button [ngClass]="{'success': joystickVisible, 'error': !joystickVisible}" (click)="toogleJoystick()">
+    <button mat-button *ngIf="myself != null && !myself.is_anonymous"  [ngClass]="{'success': joystickVisible, 'error': !joystickVisible}" (click)="toogleJoystick()">
         <mat-icon>gamepad</mat-icon>
     </button>
 </div>

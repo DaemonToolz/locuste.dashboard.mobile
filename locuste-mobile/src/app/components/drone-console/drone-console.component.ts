@@ -63,6 +63,7 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.calculateDim();
   }
+
   ngOnDestroy(): void {
     this.changeFlightModel(true);
   }
@@ -177,6 +178,10 @@ export class DroneConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+  }
+
+  public get myself(){
+    return this.operatorService.myself;
   }
 
   public get isManual(){

@@ -7,6 +7,7 @@ import { ControlSocketService } from './services/sockets/control-socket.service'
 import { OperatorService } from './services/users/operator.service';
 import { Operator } from './models/operator';
 import { LogUpdateService } from './services/pwa/log-update.service';
+import { SocketStatus, PcToHubStatus } from './models/status';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,9 @@ import { LogUpdateService } from './services/pwa/log-update.service';
 })
 export class AppComponent {
   public title = 'locuste-mobile';
+
+  public SocketStatus = SocketStatus;
+  public PcToHubStatus = PcToHubStatus;
 
   constructor(public appUpdater : LogUpdateService, private socket: ControlSocketService, private operatorService: OperatorService, private matIconRegistry: MatIconRegistry, private dialog: MatDialog, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(`drone_icon`, this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/images/drone.svg`));
@@ -52,6 +56,11 @@ export class AppComponent {
       this.appUpdater.installAvaiable = event;
     });
   }
+
+  public get socketConnection(){
+    return this.socket.websocketStatus;
+  }
+
 
   public authenticate() {
     if (this.operatorService.myself != null && this.operatorService.myself.name.length > 0) {

@@ -6,6 +6,9 @@ import { DroneDataService } from 'src/app/services/drones/drone-data.service';
 import { OperatorService } from 'src/app/services/users/operator.service';
 import { HealthMonitoringService } from 'src/app/services/health/health-monitoring.service';
 import { AutoPilotDataService } from 'src/app/services/autopilot/auto-pilot-data.service';
+import { AutomatedCommandRequest } from 'src/app/models/commands';
+import { take } from 'rxjs/operators';
+import { CommandRequesterService } from 'src/app/services/drones/command-requester.service';
 
 @Component({
   selector: 'app-drone-preview',
@@ -35,7 +38,7 @@ export class DronePreviewComponent implements OnInit {
   }
 
 
-  public constructor(private autoPilotService: AutoPilotDataService, private droneData :DroneDataService,  private operatorService: OperatorService, private droneStatusController: HealthMonitoringService)  { 
+  public constructor(private requesterService : CommandRequesterService, private autoPilotService: AutoPilotDataService, private droneData :DroneDataService,  private operatorService: OperatorService, private droneStatusController: HealthMonitoringService)  { 
     this.calculateDim();
   } 
 
@@ -126,6 +129,19 @@ export class DronePreviewComponent implements OnInit {
 
   public getWifiStrength(droneName: string) : WifiStrength{
     return this.droneData.wifiStrength(droneName)
+  }
+
+  public takeoffLand(droneName: string) {
+    let target = this.droneData.droneFlyingStatuses(droneName);
+
+    if(target != null && !target.is_going_home){
+
+      if(target.is_landed){
+        this.requesterService.sendAutomatedCommand(droneName, AutomatedCommandRequest.TakeOff).pipe(take(1)).subscribe()
+      } else if(target.is_home_ready){
+        this.requesterService.sendAutomatedCommand(droneName, AutomatedCommandRequest.GoHome).pipe(take(1)).subscribe()
+      }
+    }
   }
 
 }

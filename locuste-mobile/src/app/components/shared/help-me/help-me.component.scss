@@ -1,0 +1,48 @@
+.div-table{
+    height: 75vh;
+    max-height: 75vh;
+    overflow: auto;
+  }
+
+  .error-fill {
+    background-color: red;
+  }
+  
+  .success-fill {
+    background-color: green;
+  }
+  
+  .warning-fill {
+    background-color: orange;
+  }
+  
+  .info-fill {
+    background-color: blue;
+  }
+
+  .error-text {
+    color: lighten(red,10);
+}
+
+.warning-text {
+    color: lighten(orange,10);
+}
+  
+
+.info-icon {
+    width:50%;
+    height:100%
+  }
+  
+  .large-info-icon {
+    width:100%;
+    height:100%
+  }
+
+  .info-section {
+    height:100%;
+    display:flex;
+    vertical-align: middle;
+    justify-content: center;
+  }
+  

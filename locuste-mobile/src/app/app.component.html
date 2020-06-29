@@ -18,23 +18,29 @@
         <mat-icon matListIcon>device_hub</mat-icon>
         <span>Etat général</span>
       </a>
-      <a mat-list-item (click)=" drawer.close();">
+
+
+      <a mat-list-item routerLink="/help"  (click)=" drawer.close();">
         <mat-icon matListIcon>help</mat-icon>
         <span>Aide</span>
       </a>
 
       <button mat-list-item (click)="authenticate(); drawer.close();">
-        <mat-icon *ngIf="myself == null" matListIcon>app_blocking</mat-icon>
+        <mat-icon *ngIf="myself == null" matListIcon>block</mat-icon>
         <mat-icon *ngIf="myself != null && myself.is_anonymous" matListIcon>input</mat-icon>
         <mat-icon *ngIf="myself != null && !myself.is_anonymous" matListIcon>verified_user</mat-icon>
   
-        <span> Login </span>
+        <span *ngIf="myself == null || myself.is_anonymous">  Login </span>
+        <span *ngIf="myself != null && !myself.is_anonymous" [innerHTML]="myself.name">   </span>
       </button>
 
-      <button *ngIf="appUpdater.installAvaiable" (click)="installPwa()">
-        <mat-icon> system_update </mat-icon>
-        <span> Installer </span> 
-      </button>
+      <div class="item-bottom"> 
+        <button mat-list-item  *ngIf="appUpdater.installAvaiable" (click)="installPwa()">
+          <mat-icon> system_update </mat-icon>
+          <span> Installer </span> 
+        </button>
+      </div>
+      
     </mat-action-list>
 
   </mat-drawer>

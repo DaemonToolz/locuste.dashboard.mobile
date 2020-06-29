@@ -1,0 +1,31 @@
+<div class="div-table">
+    <mat-table [dataSource]="helpPage">
+        <ng-container matColumnDef="content">
+            <mat-header-cell *matHeaderCellDef> Représentation </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <a mat-button [ngClass]="element.class">
+                    <mat-icon  [ngClass]="element.icon_class" *ngIf="element.icon && !element.is_custom"> {{element.icon}}</mat-icon>
+                    <mat-icon  [ngClass]="element.icon_class" *ngIf="element.icon && element.is_custom" svgIcon="{{element.icon}}"> </mat-icon>
+                    <span [innerHTML]="element.content"></span>
+                </a>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span [innerHTML]="element.description"></span>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+<mat-tab-group #helpGroup (selectedTabChange)="tabChanged($event)" headerPosition="below" dynamicHeight="false" mat-align-tabs="center">
+    <mat-tab label="Menu général"></mat-tab>
+    <mat-tab label="Vue simplifiée"></mat-tab>
+    <mat-tab label="Vue console"></mat-tab>
+    <mat-tab label="Etat général"></mat-tab>
+</mat-tab-group>

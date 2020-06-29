@@ -1,0 +1,17 @@
+{
+    "data": [
+            
+        {"icon": "toc", "content":"", "description":"Vue globale"},
+        {"icon": "device_hub", "content":"", "description":"Section maintenance"},
+
+        {"icon": "location_on", "content":"", "description":"Carte du secteur"},
+        {"icon": "help", "content":"", "description":"Menu d'aide"},
+        {"icon": "block", "content":"", "description":"Identification KO"},
+        {"icon": "input", "content":"", "description":"Non identifié"},
+        {"icon": "verified_user", "content":"", "description":"Identifié"},
+        {"icon": "system_update", "content":"", "description":"Mise à jour / installation"},
+        {"icon": "menu", "content":"", "description":"Menu général"}
+    ]
+}
+
+

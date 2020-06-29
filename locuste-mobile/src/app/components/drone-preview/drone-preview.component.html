@@ -23,12 +23,15 @@
             <app-drone-map *ngIf="isOnView(drone, ViewsEnum.DroneMapView)" [height]="height"  [drone]="drone"></app-drone-map>
         </div>
         <div class="control">
-            <button mat-button  (click)="changeView(drone, ViewsEnum.DroneCameraView)">
+            <button mat-button  *ngIf="!isOnView(drone, ViewsEnum.DroneCameraView)"  (click)="changeView(drone, ViewsEnum.DroneCameraView)">
                 <mat-icon>camera_alt</mat-icon>
             </button>
-            <button mat-button  (click)="changeView(drone, ViewsEnum.DroneMapView)">
+            <button mat-button *ngIf="!isOnView(drone, ViewsEnum.DroneMapView)"   (click)="changeView(drone, ViewsEnum.DroneMapView)">
                 <mat-icon>location_on</mat-icon>
             </button>
+            <a mat-button (click)="takeoffLand(drone);" *ngIf="getAutopilotStatus(drone) != null && getFlyingStatus(drone) != null ">  
+                <mat-icon>{{ getFlyingStatus(drone).is_landed ? 'flight_takeoff' : 'flight_land' }}</mat-icon> 
+            </a>
             <a mat-button routerLink="/fullscreen/{{drone}}">
                 <mat-icon>fullscreen</mat-icon>
             </a>

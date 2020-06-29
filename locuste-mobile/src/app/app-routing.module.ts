@@ -4,12 +4,14 @@ import { DronePreviewComponent } from './components/drone-preview/drone-preview.
 import { DroneConsoleComponent } from './components/drone-console/drone-console.component';
 import { FullScreenViewerComponent } from './components/shared/full-screen-viewer/full-screen-viewer.component';
 import { HubMonitoringComponent } from './components/monitor/hub-monitoring/hub-monitoring.component';
+import { HelpMeComponent } from './components/shared/help-me/help-me.component';
 
 
 const routes: Routes = [
   {path:'monitor', component:HubMonitoringComponent},
   {path:'fullscreen/:droneid', component:FullScreenViewerComponent},
   {path:'console/:droneid', component:DroneConsoleComponent},
+  {path:'help', component:HelpMeComponent},
   {path: '**', component: DronePreviewComponent}
 ];
 

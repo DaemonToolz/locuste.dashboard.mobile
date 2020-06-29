@@ -16,6 +16,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatFormFieldModule} from "@angular/material/form-field"
 import {MatCardModule} from "@angular/material/card"
 import {MatInputModule} from "@angular/material/input"
+import {MatTableModule} from "@angular/material/table"
 import { FormsModule } from '@angular/forms';
 
 import { IdentificationPortalComponent } from './components/shared/identification-portal/identification-portal.component';
@@ -34,6 +35,7 @@ import { OperatorService } from './services/users/operator.service';
 import { DroneMapComponent } from './components/shared/drone-map/drone-map.component';
 import { LogUpdateService } from './services/pwa/log-update.service';
 import { AppUpdaterService } from './services/pwa/app-updater.service';
+import { HelpMeComponent } from './components/shared/help-me/help-me.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { AppUpdaterService } from './services/pwa/app-updater.service';
     RTSPStreamerComponent,
     FullScreenViewerComponent,
     HubMonitoringComponent,
-    DroneMapComponent
+    DroneMapComponent,
+    HelpMeComponent
   ],
   entryComponents:[
     IdentificationPortalComponent
@@ -54,6 +57,7 @@ import { AppUpdaterService } from './services/pwa/app-updater.service';
     HttpClientModule,
     FormsModule,
     MatDialogModule,
+    MatTableModule,
     BrowserModule,
     MatButtonModule,
     MatListModule,
