@@ -36,6 +36,7 @@ import { DroneMapComponent } from './components/shared/drone-map/drone-map.compo
 import { LogUpdateService } from './services/pwa/log-update.service';
 import { AppUpdaterService } from './services/pwa/app-updater.service';
 import { HelpMeComponent } from './components/shared/help-me/help-me.component';
+import { DroneControlComponent } from './components/drone-control/drone-control.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { HelpMeComponent } from './components/shared/help-me/help-me.component';
     FullScreenViewerComponent,
     HubMonitoringComponent,
     DroneMapComponent,
-    HelpMeComponent
+    HelpMeComponent,
+    DroneControlComponent
   ],
   entryComponents:[
     IdentificationPortalComponent

@@ -15,6 +15,7 @@ export enum SubSystem{
     // Section composants dédiés
     VideoServer = "Serveur vidéo",
     VideoStream = "Flux vidéo",
+    OrderStream = "Canal d'envoi des ordres",
 
     // Section Scheduler 
     BrainConnection = "Connexion à l'unité de contrôle",
